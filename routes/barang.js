@@ -1,6 +1,5 @@
 const express = require('express');
 const Barang = require('../model/barang');
-const Toko = require('../model/toko');
 
 const router = express.Router();
 

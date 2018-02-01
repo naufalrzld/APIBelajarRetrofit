@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/member', member);
-app.use('/toko', toko);
 app.use('/barang', barang);
+app.use('/toko', toko);
 
 app.listen(PORT, () => console.log('Example app running on port ${PORT}'));
