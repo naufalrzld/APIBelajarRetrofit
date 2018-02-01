@@ -28,16 +28,6 @@ router.get('/:username', async (req, res) => {
         attributes: Object.keys(Toko.attributes).concat([
             [Toko.sequelize.literal('(SELECT COUNT(\'*\') FROM barang WHERE idToko = toko.idToko)'), 'jumlahBarang']
         ]),
-        /*attributes: [
-            'idToko', 'username', 'namaToko', 'descToko', 'createdAt', 'updatedAt',
-            [Toko.sequelize.fn('COUNT', 'barang.kodeBarang'), 'jumlahBarang']
-        ],*/
-        /*include: [{
-            model: Barang,
-            required: true,
-            attributes: []
-        }],
-        group: ['toko.idToko'],*/
         where : {
             username : req.params.username
         }
