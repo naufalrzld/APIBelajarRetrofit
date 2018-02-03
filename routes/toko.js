@@ -139,28 +139,44 @@ router.delete('/delete/:idToko', async (req, res) => {
 })
 
 router.post('/update', async (req, res) => {
-    let result = null
+    let Mode = req.header("Mode");
+    let data = null;
+    let result = null;
 
-    const toko = await Toko.update(req.body, {
+    if (Mode === "Postman") {
+        data = req.body;
+    } else {
+        data = req.body.nameValuePairs
+    }
+
+    const toko = await Toko.update(data, {
         where : {
-            idToko : req.body.idToko
+            idToko : data.idToko
         }
     })
 
-    if (toko == 0) {
-        res.statusCode = 500
-        result =  res.json({
+    if (toko === 0) {
+        res.statusCode = 500;
+        result = {
             status: res.statusCode,
-            message: 'Update Gagal',
-        })
+            message: 'Update Gagal'
+        };
     } else {
-        result = res.json({
+        result = {
             status: res.statusCode,
             message: 'Update Berhasil',
-        })
+            data : {
+                namaToko : data.namaToko,
+                descToko : data.descToko
+            }
+        };
     }
 
-    return result
+    if (Mode === "Postman") {
+        res.send(result);
+    } else {
+        res.json(JSON.stringify(result));
+    }
 })
 
 module.exports = router
